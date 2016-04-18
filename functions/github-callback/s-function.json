@@ -1,5 +1,5 @@
 {
-  "name": "github-auth",
+  "name": "github-callback",
   "runtime": "nodejs4.3",
   "description": "Serverless Lambda function for project: gitrdone",
   "customName": false,
@@ -13,7 +13,7 @@
   },
   "endpoints": [
     {
-      "path": "github-auth",
+      "path": "github-callback",
       "method": "GET",
       "type": "AWS",
       "authorizationType": "none",
@@ -25,8 +25,8 @@
       },
       "requestTemplates": {
         "application/json": {
-          "slack_state": "$input.params('state')",
-          "slack_code": "$input.params('code')",
+          "github_state": "$input.params('state')",
+          "github_code": "$input.params('code')",
           "api_id": "$context.apiId",
           "api_stage": "$context.stage"
         }
@@ -36,10 +36,8 @@
           "statusCode": "400"
         },
         "default": {
-          "statusCode": "302",
-          "responseParameters": {
-            "method.response.header.Location": "integration.response.body.location"
-          },
+          "statusCode": "200",
+          "responseParameters": {},
           "responseModels": {
             "application/json;charset=UTF-8": "Empty"
           },
@@ -55,10 +53,8 @@
     "SERVERLESS_PROJECT": "${project}",
     "SERVERLESS_STAGE": "${stage}",
     "SERVERLESS_REGION": "${region}",
-    "SLACK_CLIENT_ID": "${slack_client_id}",
-    "SLACK_CLIENT_SECRET": "${slack_client_secret}",
-    "SLACK_VERIFICATION_TOKEN": "${slack_verification_token}",
     "GITHUB_CLIENT_ID": "${github_client_id}",
+    "GITHUB_CLIENT_SECRET": "${github_client_secret}",
     "AWS_REGION": "${region}",
     "AWS_ACCESS_KEY_ID": "${aws_access_key_id}",
     "AWS_SECRET_ACCESS_KEY": "${aws_secret_access_key}",

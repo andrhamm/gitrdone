@@ -1,8 +1,11 @@
 'use strict';
 
+console.log("webhook starting");
+
 var crypto = require('crypto');
 
 module.exports.handler = function(event, context, cb) {
+  console.log("webhook handler");
   console.log(event);
 
   var text;

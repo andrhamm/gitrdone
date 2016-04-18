@@ -1,9 +1,11 @@
 'use strict';
 
+console.log("slack-auth starting");
+
 var qs = require('querystring');
 
 module.exports.handler = function(event, context, cb) {
-  console.log("slack-auth...");
+  console.log("slack-auth handler");
   console.log(event);
 
   // TODO: support custom domain
