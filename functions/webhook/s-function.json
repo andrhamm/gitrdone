@@ -1,0 +1,78 @@
+{
+  "name": "webhook",
+  "runtime": "nodejs4.3",
+  "description": "Serverless Lambda function for project: gitrdone",
+  "customName": false,
+  "customRole": false,
+  "handler": "handler.handler",
+  "timeout": 6,
+  "memorySize": 1024,
+  "authorizer": {},
+  "custom": {
+    "excludePatterns": []
+  },
+  "endpoints": [
+    {
+      "path": "webhook",
+      "method": "GET",
+      "type": "AWS",
+      "authorizationType": "none",
+      "authorizerFunction": false,
+      "apiKeyRequired": false,
+      "requestParameters": {
+        "integration.request.querystring.token": "method.request.querystring.token",
+        "integration.request.querystring.team_id": "method.request.querystring.team_id",
+        "integration.request.querystring.team_domain": "method.request.querystring.team_domain",
+        "integration.request.querystring.channel_id": "method.request.querystring.channel_id",
+        "integration.request.querystring.channel_name": "method.request.querystring.channel_name",
+        "integration.request.querystring.user_id": "method.request.querystring.user_id",
+        "integration.request.querystring.user_name": "method.request.querystring.user_name",
+        "integration.request.querystring.command": "method.request.querystring.command",
+        "integration.request.querystring.text": "method.request.querystring.text",
+        "integration.request.querystring.response_url": "method.request.querystring.response_url"
+      },
+      "requestTemplates": {
+        "application/json": {
+          "token": "$input.params('token')",
+          "team_id": "$input.params('team_id')",
+          "team_domain": "$input.params('team_domain')",
+          "channel_id": "$input.params('channel_id')",
+          "channel_name": "$input.params('channel_name')",
+          "user_id": "$input.params('user_id')",
+          "user_name": "$input.params('user_name')",
+          "command": "$input.params('command')",
+          "text": "$input.params('text')",
+          "response_url": "$input.params('response_url')",
+          "api_id": "$context.apiId",
+          "api_stage": "$context.stage"
+        }
+      },
+      "responses": {
+        "400": {
+          "statusCode": "400"
+        },
+        "default": {
+          "statusCode": "200",
+          "responseParameters": {},
+          "responseModels": {
+            "application/json;charset=UTF-8": "Empty"
+          },
+          "responseTemplates": {
+            "application/json;charset=UTF-8": ""
+          }
+        }
+      }
+    }
+  ],
+  "events": [],
+  "environment": {
+    "SERVERLESS_PROJECT": "${project}",
+    "SERVERLESS_STAGE": "${stage}",
+    "SERVERLESS_REGION": "${region}",
+    "SLACK_VERIFICATION_TOKEN": "${slack_verification_token}"
+  },
+  "vpc": {
+    "securityGroupIds": [],
+    "subnetIds": []
+  }
+}

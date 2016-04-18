@@ -1,0 +1,17 @@
+{
+  "name": "gitrdone",
+  "version": "0.0.1",
+  "description": "OSS, AWS Lambda-backed (Serverless) Dones with Slack integration",
+  "author": "Andrew Hammond",
+  "license": "MIT",
+  "private": false,
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/andrhamm/gitrdone"
+  },
+  "dependencies": {
+    "aws-sdk": "^2.3.3",
+    "simple-encryptor": "^1.1.0",
+    "unirest": "^0.4.2"
+  }
+}
