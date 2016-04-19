@@ -1,5 +1,7 @@
 {
   "name": "gitrdone",
   "custom": {},
-  "plugins": []
+  "plugins": [
+    "serverless-plugin-hookscripts"
+  ]
 }
