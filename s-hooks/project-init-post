@@ -15,9 +15,14 @@ var prompt = require('prompt'),
     hashids = new Hashids("gitrdone!"),
     AWS = require('aws-sdk');
 
+
+
 var projectName = process.env.SLS_HOOK_NAME,
-    projectStage = process.env.SLS_HOOK_STAGE,
-    awsProfile = process.env.SLS_HOOK_PROFILE;
+    projectStage = process.env.SLS_HOOK_STAGE;
+
+var profileVar = 'AWS_' + projectStage + '_PROFILE';
+
+var awsProfile = process.env[profileVar.toUpperCase()];
 
 console.log(colors.cyan("Gitrdone stores encrypted user access tokens in an S3 bucket.\n" +
                     "The bucket will be created if it doesn't exist.\n" +
