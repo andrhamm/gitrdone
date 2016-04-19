@@ -9,5 +9,13 @@
     "type": "git",
     "url": "git://github.com/andrhamm/gitrdone"
   },
-  "dependencies": {}
+  "devDependencies": {
+    "serverless-plugin-hookscripts": "^0.5.0"
+  },
+  "dependencies": {
+    "aws-sdk": "^2.3.3",
+    "simple-encryptor": "^1.1.0",
+    "underscore": "^1.8.3",
+    "unirest": "^0.4.2"
+  }
 }
