@@ -43,7 +43,7 @@ console.log(colors.cyan("Gitrdone stores encrypted user access tokens in an S3 b
 //       required: true
 //     }
 //   }
-};
+// };
 
 // prompt.start();
 
