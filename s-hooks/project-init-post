@@ -27,6 +27,8 @@ console.log(colors.cyan("Gitrdone stores encrypted user access tokens in an S3 b
                     "If using an existing bucket, restrict world access!\n" +
                     "Bucket name must begin with \""+projectName+"-"+projectStage+"-\" in order for permissions to work."));
 
+var bucketName = projectName+'-'+projectStage+'-' + hashids.encode(Math.floor(new Date())).toLowerCase();
+
 // prompt.delimiter = '';
 // prompt.message = '';
 
@@ -39,7 +41,7 @@ console.log(colors.cyan("Gitrdone stores encrypted user access tokens in an S3 b
 //       // avoid using periods (".") in bucket names!
 //       pattern: /^[a-z0-9][a-z0-9\-_]{2,62}$/,
 //       message: 'Bucket name should consist of at least 3 and no more than 63 lowercase letters, numbers, or hyphens.',
-//       default: projectName+'-'+projectStage+'-' + hashids.encode(Math.floor(new Date())).toLowerCase(),
+//       default: bucketName,
 //       required: true
 //     }
 //   }
@@ -48,14 +50,15 @@ console.log(colors.cyan("Gitrdone stores encrypted user access tokens in an S3 b
 // prompt.start();
 
 // prompt.get(schema, function (err, result) {
-  console.log('Creating bucket "' + result.bucket + '" with AWS profile ' + awsProfile);
+  // bucketName = result.bucket;
+  console.log('Creating bucket "' + bucketName + '" with AWS profile ' + awsProfile);
 
   var credentials = new AWS.SharedIniFileCredentials({profile: awsProfile});
   AWS.config.credentials = credentials;
 
   var s3bucket = new AWS.S3({
     params: {
-      Bucket: result.bucket
+      Bucket: bucketName
     }
   });
 
@@ -64,19 +67,19 @@ console.log(colors.cyan("Gitrdone stores encrypted user access tokens in an S3 b
       console.log(colors.red("S3 bucket creation error:"));
       console.log(err);
     } else {
-      console.log(colors.green("S3 bucket '"+result.bucket+"' created"));
+      console.log(colors.green("S3 bucket '"+bucketName+"' created"));
 
       jsonfile.spaces = 2;
 
       var file = '_meta/variables/s-variables-' + projectStage + '.json';
       jsonfile.readFile(file, function(err, obj) {
-        obj['s3_bucket_name_gitrdone'] = result.bucket;
+        obj['s3_bucket_name_gitrdone'] = bucketName;
 
         jsonfile.writeFile(file, obj, function (err) {
           if (err) {
             console.log("Failed to write 's3_bucket_name_gitrdone' variable to " + file);
             console.error(err);
-            console.log(colors.red("Please manually set 's3_bucket_name_gitrdone' to '"+result.bucket+"' in " + file));
+            console.log(colors.red("Please manually set 's3_bucket_name_gitrdone' to '"+bucketName+"' in " + file));
           } else {
             console.log(colors.green("Wrote 's3_bucket_name_gitrdone' variable to " + file));
           }
