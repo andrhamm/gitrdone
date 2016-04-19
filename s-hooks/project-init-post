@@ -8,14 +8,12 @@ console.log("Hookscript: project-init-post starting");
 console.log(process.argv);
 console.log(process.env);
 
-var prompt = require('prompt'),
-    colors = require("colors/safe"),
+var colors = require("colors/safe"),
+    // prompt = require('prompt'),
     jsonfile = require('jsonfile'),
     Hashids = require("hashids"),
     hashids = new Hashids("gitrdone!"),
     AWS = require('aws-sdk');
-
-
 
 var projectName = process.env.SLS_HOOK_NAME,
     projectStage = process.env.SLS_HOOK_STAGE;
@@ -29,27 +27,27 @@ console.log(colors.cyan("Gitrdone stores encrypted user access tokens in an S3 b
                     "If using an existing bucket, restrict world access!\n" +
                     "Bucket name must begin with \""+projectName+"-"+projectStage+"-\" in order for permissions to work."));
 
-prompt.delimiter = '';
-prompt.message = '';
+// prompt.delimiter = '';
+// prompt.message = '';
 
-var schema = {
-  properties: {
-    bucket: {
-      description: colors.cyan("Enter a bucket name (must be globally unique to all of S3): "),
-      type: 'string',
-      // 3-63 chars, lowercase letters, numbers, and hyphens
-      // avoid using periods (".") in bucket names!
-      pattern: /^[a-z0-9][a-z0-9\-_]{2,62}$/,
-      message: 'Bucket name should consist of at least 3 and no more than 63 lowercase letters, numbers, or hyphens.',
-      default: projectName+'-'+projectStage+'-' + hashids.encode(Math.floor(new Date())).toLowerCase(),
-      required: true
-    }
-  }
+// var schema = {
+//   properties: {
+//     bucket: {
+//       description: colors.cyan("Enter a bucket name (must be globally unique to all of S3): "),
+//       type: 'string',
+//       // 3-63 chars, lowercase letters, numbers, and hyphens
+//       // avoid using periods (".") in bucket names!
+//       pattern: /^[a-z0-9][a-z0-9\-_]{2,62}$/,
+//       message: 'Bucket name should consist of at least 3 and no more than 63 lowercase letters, numbers, or hyphens.',
+//       default: projectName+'-'+projectStage+'-' + hashids.encode(Math.floor(new Date())).toLowerCase(),
+//       required: true
+//     }
+//   }
 };
 
-prompt.start();
+// prompt.start();
 
-prompt.get(schema, function (err, result) {
+// prompt.get(schema, function (err, result) {
   console.log('Creating bucket "' + result.bucket + '" with AWS profile ' + awsProfile);
 
   var credentials = new AWS.SharedIniFileCredentials({profile: awsProfile});
@@ -63,7 +61,7 @@ prompt.get(schema, function (err, result) {
 
   s3bucket.createBucket(function(err) {
     if (err) {
-      console.log("s3 bucket create error");
+      console.log(colors.red("S3 bucket creation error:"));
       console.log(err);
     } else {
       console.log(colors.green("S3 bucket '"+result.bucket+"' created"));
@@ -85,5 +83,5 @@ prompt.get(schema, function (err, result) {
         });
       });
     }
-  });
+  // });
 });
