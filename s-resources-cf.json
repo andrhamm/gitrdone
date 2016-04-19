@@ -39,6 +39,18 @@
                 "logs:PutLogEvents"
               ],
               "Resource": "arn:aws:logs:${region}:*:*"
+            },
+            {
+              "Effect": "Allow",
+              "Action": [
+                "s3:Get*",
+                "s3:List*",
+                "s3:Put*",
+                "s3:Delete*"
+              ],
+              "Resource": [
+                "arn:aws:s3:::${project}-${stage}-*"
+              ]
             }
           ]
         },

@@ -10,6 +10,10 @@
     "url": "git://github.com/andrhamm/gitrdone"
   },
   "devDependencies": {
+    "colors": "^1.1.2",
+    "hashids": "^1.0.2",
+    "jsonfile": "^2.3.0",
+    "prompt": "^1.0.0",
     "serverless-plugin-hookscripts": "^0.5.0"
   },
   "dependencies": {

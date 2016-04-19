@@ -43,6 +43,7 @@ node_modules
 #SERVERLESS
 admin.env
 .env
+s-hooks/*.sample
 
 #Ignore _meta folder
 _meta
