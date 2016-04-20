@@ -1,6 +1,13 @@
 # gitrdone
 
-OSS, AWS Lambda-backed (Serverless) Dones with Slack integration
+Self-hosted, AWS Lambda-backed (Serverless) "Dones" with Slack and Github integration! 
+
+Why use Gitrdone?
+
+* To keep track of what you got done today!
+* Free and open-source alternative to costly SaaS products such as [iDoneThis](https://home.idonethis.com/)
+* Alternative to third-party Slack apps that request too much Slack permission, opening up security vulnerabilities in your team.
+* Integrates with tools you already use, Slack & Github!
 
 ## Requirements
 
