@@ -13,13 +13,6 @@ var _ = require('underscore'),
       debug: true
     });
 
-// TODO: figure out why this is needed... sdk should pull from env automatically
-AWS.config.update({
-  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-  region: process.env.AWS_REGION
-});
-
 var defaultHeaders = {
   'Accept': 'application/json',
   'User-Agent': 'andrhamm/gitrdone'
@@ -42,24 +35,24 @@ module.exports.handler = function(event, context, cb) {
       slackAccessTokenHash = slackData.slack_access_token_hash;
 
   // get slack access token with code from the request
-  var Request = unirest.post("https://github.com/login/oauth/access_token");
+  var GithubAccessTokenRequest = unirest.post("https://github.com/login/oauth/access_token");
 
-  Request.headers(defaultHeaders).query({
+  GithubAccessTokenRequest.headers(defaultHeaders).query({
     client_id: process.env.GITHUB_CLIENT_ID,
     client_secret: process.env.GITHUB_CLIENT_SECRET,
     code: event.github_code,
     state: event.github_state,
     redirect_uri: host + "/github-callback"
-  }).end(function (response) {
+  }).end(function (githubTokenResponse) {
     console.log("github access token response body:");
-    console.log(response.body);
+    console.log(githubTokenResponse.body);
 
     var ProfileRequest = unirest.get("https://api.github.com/user");
     ProfileRequest.query({
-      access_token: response.body.access_token
-    }).headers(defaultHeaders).end(function (profileResponse) {
+      access_token: githubTokenResponse.body.access_token
+    }).headers(defaultHeaders).end(function (githubProfileResponse) {
       console.log("github profile response body:");
-      console.log(profileResponse.body);
+      console.log(githubProfileResponse.body);
 
       var s3bucket = new AWS.S3({
         params: {
@@ -69,8 +62,12 @@ module.exports.handler = function(event, context, cb) {
 
       var s3KeyName = "github/"+slackUserId;
       var s3Body = {};
-      _.extend(s3Body, response.body, profileResponse.body);
-      var params = {Key: s3KeyName, Body: JSON.stringify(s3Body)};
+      _.extend(s3Body, githubTokenResponse.body, githubProfileResponse.body);
+      var params = {
+        Key: s3KeyName,
+        Body: JSON.stringify(s3Body),
+        ContentType: "application/json"
+      };
       s3bucket.upload(params, function(err, data) {
         console.log("s3 upload finished");
         console.log(data);
@@ -80,9 +77,12 @@ module.exports.handler = function(event, context, cb) {
           console.log("Successfully uploaded data to "+process.env.S3_BUCKET_NAME_GITRDONE+"/"+s3KeyName);
         }
 
-        return cb(null, {
-          message: 'github-callback done'
-        });
+        // TODO: load the response URL from the
+        // original Slack webhook and attempt to
+        // post a message back with an example
+        // command for a first Done
+
+        return cb(null, 'You connected your GitHub account ('+githubProfileResponse.body.login+')!');
       });
     });
   });

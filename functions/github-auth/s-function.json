@@ -60,8 +60,6 @@
     "SLACK_VERIFICATION_TOKEN": "${slack_verification_token}",
     "GITHUB_CLIENT_ID": "${github_client_id}",
     "AWS_REGION": "${region}",
-    "AWS_ACCESS_KEY_ID": "${aws_access_key_id}",
-    "AWS_SECRET_ACCESS_KEY": "${aws_secret_access_key}",
     "S3_BUCKET_NAME_GITRDONE": "${s3_bucket_name_gitrdone}",
     "ENCRYPTION_KEY": "${encryption_key}"
   },
