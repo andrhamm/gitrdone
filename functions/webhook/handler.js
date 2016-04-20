@@ -22,6 +22,10 @@ module.exports.handler = function(event, context, cb) {
     return context.fail('Webhook contained an invalid Slack verification token.');
   }
 
+  if (!event.text || event.text.length == 0) {
+    return cb(null, {text: "You didn't type anything! What did you do?"});
+  }
+
   var s3 = new AWS.S3();
 
   // TODO: do s3 calls asyncronously
