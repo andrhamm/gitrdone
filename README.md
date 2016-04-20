@@ -9,6 +9,14 @@ Why use Gitrdone?
 * Alternative to third-party Slack apps that request too much Slack permission, opening up security vulnerabilities in your team.
 * Integrates with tools you already use, Slack & Github!
 
+Usage:
+
+* In Slack, type something like `/gitrdone That thing I got done`
+* First-time users will be directed through a quick auth flow that associates their Slack and Github accounts.
+* "Dones" will be recorded in a Github Gist ([https://gist.github.com](https://gist.github.com))!
+* A new Gist "file" will be created on the same Gist every day with your Dones.
+* Dones are parsed with Github-flavored Markdown, allowing some neat things.
+
 ## Requirements
 
 Gitrdone is a self-hosted service, meaning you host it on your own Amazon Web Services account. It relies on the following AWS products:
