@@ -5,8 +5,8 @@
 // 'use strict';
 
 console.log("Hookscript: project-init-post starting");
-console.log(process.argv);
-console.log(process.env);
+// console.log(process.argv);
+// console.log(process.env);
 
 var colors = require("colors/safe"),
     // prompt = require('prompt'),

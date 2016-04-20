@@ -12,10 +12,10 @@ module.exports.handler = function(event, context, cb) {
   var host = "https://"+event.api_id+".execute-api.us-east-1.amazonaws.com/"+event.api_stage;
 
   var params = {
-    "client_id": process.env.SLACK_CLIENT_ID,
-    "scope": "identify",
-    "redirect_uri": host + "/github-auth",
-    "state": event.state
+    client_id: process.env.SLACK_CLIENT_ID,
+    scope: "identify,users:read",
+    redirect_uri: host + "/github-auth",
+    state: event.state
   };
 
   if (process.env.SLACK_TEAM_ID) {
@@ -23,6 +23,6 @@ module.exports.handler = function(event, context, cb) {
   }
 
   return cb(null, {
-    "location": "https://slack.com/oauth/authorize?" + qs.stringify(params)
+    location: "https://slack.com/oauth/authorize?" + qs.stringify(params)
   });
 };

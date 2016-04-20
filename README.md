@@ -25,3 +25,5 @@ Note: You can change the `-s` argument if you want to setup a different stage fo
 
 * Document env configuration, how to generate slss metadata
 * Add prompts to post-init hook for entering Slack & GitHub configs
+* Fail gracefully during auth flow, render HTML or plaintext errors
+* Support custom domain

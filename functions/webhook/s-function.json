@@ -4,7 +4,7 @@
   "description": "Serverless Lambda function for project: gitrdone",
   "customName": false,
   "customRole": false,
-  "handler": "handler.handler",
+  "handler": "functions/webhook/handler.handler",
   "timeout": 6,
   "memorySize": 1024,
   "authorizer": {},
@@ -69,7 +69,10 @@
     "SERVERLESS_PROJECT": "${project}",
     "SERVERLESS_STAGE": "${stage}",
     "SERVERLESS_REGION": "${region}",
-    "SLACK_VERIFICATION_TOKEN": "${slack_verification_token}"
+    "SLACK_VERIFICATION_TOKEN": "${slack_verification_token}",
+    "AWS_REGION": "${region}",
+    "S3_BUCKET_NAME_GITRDONE": "${s3_bucket_name_gitrdone}",
+    "ENCRYPTION_KEY": "${encryption_key}"
   },
   "vpc": {
     "securityGroupIds": [],
