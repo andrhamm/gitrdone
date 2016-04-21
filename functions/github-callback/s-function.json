@@ -37,12 +37,16 @@
         },
         "default": {
           "statusCode": "200",
-          "responseParameters": {},
+          "responseParameters": {
+            "method.response.header.Cache-Control": "'no-cache, no-store, must-revalidate'",
+            "method.response.header.Pragma": "'no-cache'",
+            "method.response.header.Expires": "'0'"
+          },
           "responseModels": {
-            "application/json;charset=UTF-8": "Empty"
+            "text/plain": "Empty"
           },
           "responseTemplates": {
-            "application/json;charset=UTF-8": ""
+            "text/plain": "#set($inputRoot = $input.path('$'))$inputRoot"
           }
         }
       }
